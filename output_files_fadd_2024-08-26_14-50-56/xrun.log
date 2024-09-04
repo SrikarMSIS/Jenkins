@@ -1,0 +1,22 @@
+xrun(64): 20.09-s012: (c) Copyright 1995-2021 Cadence Design Systems, Inc.
+TOOL:	xrun(64)	20.09-s012: Started on Aug 26, 2024 at 14:50:55 IST
+xrun
+	+access+rwc
+	test_fadd.sv
+	fadd.v
+Loading snapshot worklib.test_fadd:sv .................... Done
+xmsim: *W,DSEM2009: This SystemVerilog design is simulated as per IEEE 1800-2009 SystemVerilog simulation semantics. Use -disable_sem2009 option for turning off SV 2009 simulation semantics.
+xcelium> source /home/installs/XCELIUM2009/tools/xcelium/files/xmsimrc
+xcelium> run
+                   0ns cin = 0 , in2 = 0 , in1 = 0 , sum = 0 , carry = 0
+                   1ns cin = 0 , in2 = 0 , in1 = 1 , sum = 1 , carry = 0
+                   2ns cin = 0 , in2 = 1 , in1 = 0 , sum = 1 , carry = 0
+                   3ns cin = 0 , in2 = 1 , in1 = 1 , sum = 0 , carry = 1
+                   4ns cin = 1 , in2 = 0 , in1 = 0 , sum = 1 , carry = 0
+                   5ns cin = 1 , in2 = 0 , in1 = 1 , sum = 0 , carry = 1
+                   6ns cin = 1 , in2 = 1 , in1 = 0 , sum = 0 , carry = 1
+                   7ns cin = 1 , in2 = 1 , in1 = 1 , sum = 1 , carry = 1
+Simulation complete via $finish(1) at time 8 NS + 0
+./test_fadd.sv:25   #8 $finish;
+xcelium> exit
+TOOL:	xrun(64)	20.09-s012: Exiting on Aug 26, 2024 at 14:50:56 IST  (total: 00:00:01)
