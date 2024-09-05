@@ -40,20 +40,20 @@ class Jenkins_Automation:
             print("------------------------------------------------------")
             time.sleep(2)
             print("----JENKINS PARAMETERS PRINTING----")
-            jenkins_params_test_module_path = os.environ.get('Test Module Path')
-            self.newPath = jenkins_params_test_module_path
-            print("Jenkins Parameters: ",jenkins_params_test_module_path)
-            print("---JENKSINS PARAMETERS PRINTED----")
-            # self.newPath = input("-- Please provide the path to the MODULES:\n")
+            self.newPath = os.environ.get('Test Module Path')
             print("New Path: ",self.newPath)
             time.sleep(1)
-            self.topModule = input("-- Please provide the file name of the top module with .v or .sv extension:\n")
-            self.bottomModule = input("-- Please provide the file name of the bottom module with .v extension:\n")
+            #Collect top module and bottom modules names
+            self.topModule = os.environ.get('Top Module Path')
+            self.bottomModule = os.environ.get('Bottom Module Path')
+            print(f"Top and Bottom Modules: {self.topModule} and {self.bottomModule}")
+            print("---JENKINS PARAMETERS PRINTED----")
         except Exception as exception:
             print("BRANCH: ADMIN JOB")
             print(f"ERROR : {exception}")
             print("-- Exiting Execution")
             sys.exit()
+            os.exit()
         return 0
 
 
@@ -146,7 +146,8 @@ def main():
         pathTop = glob.glob(os.path.join(jenkins.newPath,topFile))
         pathBottom = glob.glob(os.path.join(jenkins.newPath,bottomFile))
         if pathTop and pathBottom:
-            Subroutine.sub_routine(jenkins.topModule, jenkins.bottomModule)
+            subCadence = Subroutine(self.newPath)
+            subCadence.sub_routine(jenkins.topModule, jenkins.bottomModule)
         else:
             print("-- Please Ensure That the top and bottom modules are in the same path")
             print("-- Exiting Execution")

@@ -3,7 +3,10 @@ import sys
 import os
 import subprocess
 class Subroutine:
-    def sub_routine(topModule, bottomModule):
+    def __init__(self, workingPath):
+        self.workingPath = workingPath
+
+    def sub_routine(self,topModule, bottomModule):
         """
         Method to run XRUN, read and represent the VCD file in a clean format
 
@@ -19,6 +22,8 @@ class Subroutine:
             print("------------------------------------")
             time.sleep(2)
             print("-- Executing in the following path")
+            print("--Executing in the following path")
+            print(f"--Cadence Execution Path: {self.workingPath}")
             print(f"{os.getcwd()}")
             source_cmd = "source /home/installs/cshrc"
             xrun_cmd = f"xrun +access+rwc {topModule} {bottomModule}"
