@@ -100,7 +100,7 @@ def main():
     # jenkins_conn = jenkins.Jenkins("http:172.16.50.80:8080")
     # jenkins_conn.console_log("WORKING: It is here")
     # #Creating instance of the class
-    # jenkins = Jenkins_Automation()
+    jenkins = Jenkins_Automation()
 
 
     #Function to perform admin work like taking input paths and output paths
