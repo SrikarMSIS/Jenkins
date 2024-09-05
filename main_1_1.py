@@ -146,7 +146,7 @@ def main():
         pathTop = glob.glob(os.path.join(jenkins.newPath,topFile))
         pathBottom = glob.glob(os.path.join(jenkins.newPath,bottomFile))
         if pathTop and pathBottom:
-            subCadence = Subroutine(self.newPath)
+            subCadence = Subroutine(jenkins.newPath)
             subCadence.sub_routine(jenkins.topModule, jenkins.bottomModule)
         else:
             print("-- Please Ensure That the top and bottom modules are in the same path")
