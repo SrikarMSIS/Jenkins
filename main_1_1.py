@@ -44,8 +44,8 @@ class Jenkins_Automation:
             print("New Path: ",self.newPath)
             time.sleep(1)
             #Collect top module and bottom modules names
-            self.topModule = os.environ.get('Top Module Path')
-            self.bottomModule = os.environ.get('Bottom Module Path')
+            self.topModule = os.environ.get('Top Module Name')
+            self.bottomModule = os.environ.get('Bottom Module Name')
             print(f"Top and Bottom Modules: {self.topModule} and {self.bottomModule}")
             print("---JENKINS PARAMETERS PRINTED----")
         except Exception as exception:
