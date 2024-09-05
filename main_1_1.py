@@ -39,8 +39,11 @@ class Jenkins_Automation:
             print("-- Execution Commences")
             print("------------------------------------------------------")
             time.sleep(2)
-            #self.newPath = input("-- Please provide the path to the MODULES:\n")
-            self.newPath = os.environ.get("MY_PARAM")
+            print("----JENKINS PARAMETERS PRINTING----")
+            jenkins_params = {k:v for k,v in os.environ.items() if k.startswith('MY_')}
+            print("Jenkins Parameters: ",jenkins_params)
+            print("---JENKSINS PARAMETERS PRINTED----")
+            self.newPath = input("-- Please provide the path to the MODULES:\n")
             print("Jenkin Job Paramters: ",self.newPath)
             time.sleep(1)
             self.topModule = input("-- Please provide the file name of the top module with .v or .sv extension:\n")
