@@ -40,12 +40,12 @@ class Jenkins_Automation:
             print("------------------------------------------------------")
             time.sleep(2)
             print("----JENKINS PARAMETERS PRINTING----")
-            self.newPath = os.environ.get('Test Module Path')
+            self.newPath = os.environ.get('File Path')
             print("New Path: ",self.newPath)
             time.sleep(1)
             #Collect top module and bottom modules names
-            self.topModule = os.environ.get('Top Module Name')
-            self.bottomModule = os.environ.get('Bottom Module Name')
+            self.topModule = os.environ.get('Top Module Name ')
+            self.bottomModule = os.environ.get('Bottom Module Name ')
             print(f"Top and Bottom Modules: {self.topModule} and {self.bottomModule}")
             print("---JENKINS PARAMETERS PRINTED----")
         except Exception as exception:
@@ -121,7 +121,7 @@ def main():
         jenkins.enter_directory()
         print(f"Previously:{jenkins.currentPath}")
         print(f"Currently: {jenkins.newPath}")
-        if jenkins.newPath == os.getcwd():
+        if jenkins.newPath is not None:
             print("-- Entered User Defined Path to execute Cadence Commands")
         else:
             print("-- Not able to branch to the User Defined Path")
