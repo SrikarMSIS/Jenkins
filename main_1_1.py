@@ -170,6 +170,7 @@ def main():
 
     except Exception as exception:
         print("BRANCH: EXIT DIRECTORY JOB")
+	print("Just a try")
         print(f"ERROR : {exception}")
         print("-- Exiting Execution")
         sys.exit()
