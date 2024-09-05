@@ -10,7 +10,7 @@ import glob
 import shutil
 from datetime import datetime
 from subroutine_test import Subroutine
-import jekins
+import jenkins
 
 
 class Jenkins_Automation:
