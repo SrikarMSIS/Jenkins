@@ -40,7 +40,7 @@ class Jenkins_Automation:
             print("------------------------------------------------------")
             time.sleep(2)
             print("----JENKINS PARAMETERS PRINTING----")
-            jenkins_params = os.environ.get('MY_PARAM')
+            jenkins_params = os.environ.get('Test Module Path')
             print("Jenkins Parameters: ",jenkins_params)
             print("---JENKSINS PARAMETERS PRINTED----")
             self.newPath = input("-- Please provide the path to the MODULES:\n")
