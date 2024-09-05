@@ -10,6 +10,7 @@ import glob
 import shutil
 from datetime import datetime
 from subroutine_test import Subroutine
+import jekins
 
 
 class Jenkins_Automation:
@@ -95,7 +96,9 @@ class Jenkins_Automation:
 
 def main():
 
-
+    #Creating an instance of the jenkins communication
+    jenkins_conn = jenkins.Jenkins("http:172.16.50.80:8080")
+    jenkins_conn.console_log("WORKING: It is here")
     #Creating instance of the class
     jenkins = Jenkins_Automation()
 
@@ -170,7 +173,7 @@ def main():
 
     except Exception as exception:
         print("BRANCH: EXIT DIRECTORY JOB")
-	print("Just a try")
+        print("Just a try")
         print(f"ERROR : {exception}")
         print("-- Exiting Execution")
         sys.exit()
