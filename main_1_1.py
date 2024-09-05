@@ -10,7 +10,7 @@ import glob
 import shutil
 from datetime import datetime
 from subroutine_test import Subroutine
-import jenkins
+
 
 
 class Jenkins_Automation:
@@ -97,10 +97,10 @@ class Jenkins_Automation:
 def main():
 
     #Creating an instance of the jenkins communication
-    jenkins_conn = jenkins.Jenkins("http:172.16.50.80:8080")
-    jenkins_conn.console_log("WORKING: It is here")
-    #Creating instance of the class
-    jenkins = Jenkins_Automation()
+    # jenkins_conn = jenkins.Jenkins("http:172.16.50.80:8080")
+    # jenkins_conn.console_log("WORKING: It is here")
+    # #Creating instance of the class
+    # jenkins = Jenkins_Automation()
 
 
     #Function to perform admin work like taking input paths and output paths
