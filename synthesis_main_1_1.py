@@ -82,6 +82,15 @@ class Synthesis:
 
         return 0
     
+    @staticmethod
+    def createTcl():
+        """
+        This function takes the TCL Content and then write it to the new path
+        Inputs: TCL Content, self.new_path
+        Returns: New TCL Script Path
+
+        """
+        
     def writeTcl(self):
         """
         This function takes the job inputs - Tech and RTL Format and writes a new file based on the inputs
