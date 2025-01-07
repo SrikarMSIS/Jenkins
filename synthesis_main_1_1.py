@@ -21,6 +21,7 @@ class Synthesis:
             log.info("----RUNNING SYNTEHSIS----")
             log.info(f"Working Path: {self.workingPath}")
             log.info(f"Technology : {self.technology}")
+            log.info(f"RTL File : {self.rtlFile}")
         except Exception as exception:
             log.error(f"Exception: {exception}")
             log.error(f"Exiting Execution")
