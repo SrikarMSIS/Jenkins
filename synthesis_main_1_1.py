@@ -17,11 +17,11 @@ class Synthesis:
     
     def adminJob(self):
         try:
-            logging("----WELCOME TO JENKINS AUTOMATION----")
-            logging("----RUNNING SYNTEHSIS----")
-            logging(f"Working Path: {self.workingPath}")
-            logging(f"Technology : {self.technology}")
-            logging(f"RTL File : {self.rtlFile}")
+            logging.info("----WELCOME TO JENKINS AUTOMATION----")
+            logging.info("----RUNNING SYNTEHSIS----")
+            logging.info(f"Working Path: {self.workingPath}")
+            logging.info(f"Technology : {self.technology}")
+            logging.info(f"RTL File : {self.rtlFile}")
         except Exception as exception:
             logging.error(f"Exception: {exception}")
             logging.error(f"Exiting Execution")
@@ -39,7 +39,7 @@ def main():
             syn = Synthesis(workingPath, rtlFile, constraints, tech)
             syn.adminJob()
         else:
-            logging("No Parameter Passed")
+            logging.info("No Parameter Passed")
     except Exception as exception:
         logging.error(f"Exception: {exception}")
         logging.error(f"Exiting Execution")
