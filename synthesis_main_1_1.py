@@ -6,6 +6,18 @@ import sys
 import os
 import glob
 
+# Configure logging
+
+logging.basicConfig(
+
+    level=logging.INFO,  # Set the logging level to INFO
+
+    format='%(asctime)s - %(levelname)s - %(message)s',  # Set the format for log messages
+
+    stream=sys.stdout  # Output logs to standard output
+
+)
+
 class Synthesis:
     #Constructor
     def __init__(self, workingPath, rtlFile, constraints, tech):
