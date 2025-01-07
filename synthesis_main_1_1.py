@@ -66,8 +66,9 @@ class Synthesis:
             logging.info("----Changing the working path")
             current_time = datetime.now()
             formatted_time = current_time.strftime('%Y-%m-%d_%H-%M-%S')
-            folder_name_split, folder_name_split_two = self.rtlFile
-            folder_name = "output_files_" + folder_name_split + "_" + formatted_time
+            filename_with_extension = self.rtlFile.split('/')[-1]
+            filename_without_extension = filename_with_extension.split('.')[0]
+            folder_name = "output_files_" + filename_without_extension + "_" + formatted_time
             folder_path = os.path.join(self.logPath,folder_name)
             os.makedirs(folder_path)
             os.chdir(folder_path)
@@ -97,7 +98,15 @@ class Synthesis:
                     json_data = json.load(json_file)
 
                 self.libraryPath = json_data[self.technology]["Synthesis"]["lib"]
-                
+                if(self.format == 'v'):
+                    with open(self.vTemp, 'r') as file:
+                        tcl_content = file.read()
+                else:
+                    with open(self.svTemp, 'r') as file:
+                        tcl_content = file.read()
+                    filename_with_extension = self.rtlFile.split('/')[-1]
+                    filename_without_extension = filename_with_extension.split('.')[0]
+                    modified_content = tcl_content.replace('{library_path}', self.libraryPath).replace('{rtl_file}', filename_with_extension).replace('{effort}', self.effort)
             else:
                 logging.error(f"----RTL Not Copied to {self.newPath}")
                 logging.error("----Exiting Execution")
