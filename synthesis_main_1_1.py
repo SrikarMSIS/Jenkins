@@ -1,7 +1,7 @@
 #Take Inputs from the Jenkins Job
 #Write a TCL File using the Job Inputs
 #Enter the Cadence Shell
-import logging as log
+import logging
 import sys
 import os
 import glob
@@ -17,14 +17,14 @@ class Synthesis:
     
     def adminJob(self):
         try:
-            print("----WELCOME TO JENKINS AUTOMATION----")
-            print("----RUNNING SYNTEHSIS----")
-            print(f"Working Path: {self.workingPath}")
-            print(f"Technology : {self.technology}")
-            print(f"RTL File : {self.rtlFile}")
+            logging("----WELCOME TO JENKINS AUTOMATION----")
+            logging("----RUNNING SYNTEHSIS----")
+            logging(f"Working Path: {self.workingPath}")
+            logging(f"Technology : {self.technology}")
+            logging(f"RTL File : {self.rtlFile}")
         except Exception as exception:
-            log.error(f"Exception: {exception}")
-            log.error(f"Exiting Execution")
+            logging.error(f"Exception: {exception}")
+            logging.error(f"Exiting Execution")
             sys.exit()
         return 0
 
@@ -39,10 +39,10 @@ def main():
             syn = Synthesis(workingPath, rtlFile, constraints, tech)
             syn.adminJob()
         else:
-            print("No Parameter Passed")
+            logging("No Parameter Passed")
     except Exception as exception:
-        log.error(f"Exception: {exception}")
-        log.error(f"Exiting Execution")
+        logging.error(f"Exception: {exception}")
+        logging.error(f"Exiting Execution")
         sys.exit()
     return 0
 
