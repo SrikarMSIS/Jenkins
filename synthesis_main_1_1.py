@@ -101,11 +101,12 @@ class Synthesis:
                 if(self.format == 'v'):
                     with open(self.vTemp, 'r') as file:
                         tcl_content = file.read()
+                        filename_with_extension = self.rtlFile.split('/')[-1]
+                        modified_content = tcl_content.replace('{library_path}', self.libraryPath).replace('{rtl_file}', filename_with_extension).replace('{effort}', self.effort)
                 else:
                     with open(self.svTemp, 'r') as file:
                         tcl_content = file.read()
                     filename_with_extension = self.rtlFile.split('/')[-1]
-                    filename_without_extension = filename_with_extension.split('.')[0]
                     modified_content = tcl_content.replace('{library_path}', self.libraryPath).replace('{rtl_file}', filename_with_extension).replace('{effort}', self.effort)
             else:
                 logging.error(f"----RTL Not Copied to {self.newPath}")
