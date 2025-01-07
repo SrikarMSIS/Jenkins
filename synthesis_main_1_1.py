@@ -35,9 +35,11 @@ def main():
             rtlFile = sys.argv[2]
             tech = sys.argv[3]
             constraints = sys.argv[1]
-        #Create instance
-        syn = Synthesis(workingPath, rtlFile, constraints, tech)
-        syn.adminJob()
+            #Create instance
+            syn = Synthesis(workingPath, rtlFile, constraints, tech)
+            syn.adminJob()
+        else:
+            log.info("No Parameter Passed")
     except Exception as exception:
         log.error(f"Exception: {exception}")
         log.error(f"Exiting Execution")
