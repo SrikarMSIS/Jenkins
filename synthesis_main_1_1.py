@@ -30,10 +30,10 @@ class Synthesis:
 
 def main():
     try:
-        workingPath = input("Input to the working Path")
-        rtlFile = input("Please enter the RTL Explicit Path")
-        tech = input("Enter the Technology you want to associate your work with")
-        constraints = input("Please enter the constraints")
+        workingPath = input("Input to the working Path: ")
+        rtlFile = input("Please enter the RTL Explicit Path: ")
+        tech = input("Enter the Technology you want to associate your work with: ")
+        constraints = input("Please enter the constraints: ")
         #Create instance
         syn = Synthesis(workingPath, rtlFile, constraints, tech)
         syn.adminJob()
