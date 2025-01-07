@@ -6,56 +6,17 @@ import sys
 import os
 import glob
 
-
-# ANSI escape codes for colors
-
-GREEN = "\033[92m"  # Green text
-
-YELLOW = "\033[93m"  # Yellow text
-
-RED = "\033[91m"     # Red text
-
-RESET = "\033[0m"    # Reset to default color
-
-
-# Custom logging formatter to add color
-
-class ColoredFormatter(logging.Formatter):
-
-    def format(self, record):
-
-        if record.levelno == logging.INFO:
-
-            record.msg = f"{GREEN}{record.msg}{RESET}"
-
-        elif record.levelno == logging.WARNING:
-
-            record.msg = f"{YELLOW}{record.msg}{RESET}"
-
-        elif record.levelno == logging.ERROR:
-
-            record.msg = f"{RED}{record.msg}{RESET}"
-
-        return super().format(record)
-
-
 # Configure logging
-
-formatter = ColoredFormatter('%(asctime)s - %(levelname)s - %(message)s')
-
-handler = logging.StreamHandler(sys.stdout)
-
-handler.setFormatter(formatter)
-
 
 logging.basicConfig(
 
     level=logging.INFO,  # Set the logging level to INFO
 
-    handlers=[handler]   # Use the custom handler
+    format='%(asctime)s - %(levelname)s - %(message)s',  # Set the format for log messages
+
+    stream=sys.stdout  # Output logs to standard output
 
 )
-
 
 class Synthesis:
     #Constructor
