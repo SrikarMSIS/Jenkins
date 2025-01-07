@@ -31,6 +31,8 @@ class Synthesis:
         self.newPath = None
         self.reqJson = "/home/vlsi/srikar/jenkins_auto/required.json"
         self.libraryPath = None
+        self.svTemp = "/home/vlsi/srikar/jenkins_auto/synthesis_sv_temp.tcl"
+        self.vTemp = "/home/vlsi/srikar/jenkins_auto/synthesis_v_temp.tcl"
     
     def adminJob(self):
         """
@@ -82,6 +84,7 @@ class Synthesis:
     def writeTcl(self):
         """
         This function takes the job inputs - Tech and RTL Format and writes a new file based on the inputs
+        This new synthesis tcl file is written to the working path
 
         Inputs: Self
         Returns: None
@@ -92,8 +95,9 @@ class Synthesis:
             if(os.path.isfile(self.newPath)):
                 with open(self.reqJson, 'r') as json_file:
                     json_data = json.load(json_file)
-                if self.technology in json_data:
-                    techData = json_data[self.technology]
+
+                self.libraryPath = json_data[self.technology]["Synthesis"]["lib"]
+                
             else:
                 logging.error(f"----RTL Not Copied to {self.newPath}")
                 logging.error("----Exiting Execution")
