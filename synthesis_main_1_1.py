@@ -83,13 +83,17 @@ class Synthesis:
         return 0
     
     @staticmethod
-    def createTcl():
+    def createTcl(content, path):
         """
         This function takes the TCL Content and then write it to the new path
         Inputs: TCL Content, self.new_path
         Returns: New TCL Script Path
 
         """
+        try:
+            tclFileName = "synthesis.tcl"
+            os.path.join(self.newPath, tclFileName)
+            
         
     def writeTcl(self):
         """
@@ -110,13 +114,14 @@ class Synthesis:
                 if(self.format == 'v'):
                     with open(self.vTemp, 'r') as file:
                         tcl_content = file.read()
-                        filename_with_extension = self.rtlFile.split('/')[-1]
-                        modified_content = tcl_content.replace('{library_path}', self.libraryPath).replace('{rtl_file}', filename_with_extension).replace('{effort}', self.effort)
+                    filename_with_extension = self.rtlFile.split('/')[-1]
+                    modified_content = tcl_content.replace('{library_path}', self.libraryPath).replace('{rtl_file}', filename_with_extension).replace('{effort}', self.effort)
                 else:
                     with open(self.svTemp, 'r') as file:
                         tcl_content = file.read()
                     filename_with_extension = self.rtlFile.split('/')[-1]
                     modified_content = tcl_content.replace('{library_path}', self.libraryPath).replace('{rtl_file}', filename_with_extension).replace('{effort}', self.effort)
+                self.createTcl(modified_content, self.newPath)
             else:
                 logging.error(f"----RTL Not Copied to {self.newPath}")
                 logging.error("----Exiting Execution")
