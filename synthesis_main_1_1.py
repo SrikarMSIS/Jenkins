@@ -92,9 +92,22 @@ class Synthesis:
         """
         try:
             tclFileName = "synthesis.tcl"
+<<<<<<< HEAD
             os.path.join(self.newPath, tclFileName)
             
+=======
+            os.path.join(path, tclFileName)
+            with open(path, 'w') as file:
+                file.write(content)
+
+        except Exception as exception:
+            logging.error(f"Exception: {exception}")
+            logging.error(f"Quitting Execution")
+            sys.exit()
+>>>>>>> 5d2248a (TCL File Writing Updated)
         
+        return 0
+    
     def writeTcl(self):
         """
         This function takes the job inputs - Tech and RTL Format and writes a new file based on the inputs
@@ -122,6 +135,10 @@ class Synthesis:
                     filename_with_extension = self.rtlFile.split('/')[-1]
                     modified_content = tcl_content.replace('{library_path}', self.libraryPath).replace('{rtl_file}', filename_with_extension).replace('{effort}', self.effort)
                 self.createTcl(modified_content, self.newPath)
+<<<<<<< HEAD
+=======
+                logging.info(f"TCL File Written in {self.newPath}")
+>>>>>>> 5d2248a (TCL File Writing Updated)
             else:
                 logging.error(f"----RTL Not Copied to {self.newPath}")
                 logging.error("----Exiting Execution")
