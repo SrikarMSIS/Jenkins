@@ -33,6 +33,7 @@ class Synthesis:
         self.libraryPath = None
         self.svTemp = "/home/vlsi/srikar/jenkins_auto/synthesis_sv_temp.tcl"
         self.vTemp = "/home/vlsi/srikar/jenkins_auto/synthesis_v_temp.tcl"
+        self.tclPath = None
     
     def adminJob(self):
         """
@@ -92,12 +93,17 @@ class Synthesis:
         """
         try:
             tclFileName = "synthesis.tcl"
-            os.path.join(path, tclFileName)
+            tclPath = os.path.join(path, tclFileName)
+            with open(tclPath, 'w') as file:
+                file.write(content)
+            logging.info(f"TCL Script Written in the path: {tclPath}")
         
         except Exception as exception:
             logging.info(f"---Exception: {exception}")
             logging.info("---Stopping Execution")
             sys.exit()
+        
+        return tclPath
             
         
     def writeTcl(self):
@@ -126,7 +132,8 @@ class Synthesis:
                         tcl_content = file.read()
                     filename_with_extension = self.rtlFile.split('/')[-1]
                     modified_content = tcl_content.replace('{library_path}', self.libraryPath).replace('{rtl_file}', filename_with_extension).replace('{effort}', self.effort)
-                self.createTcl(modified_content, self.newPath)
+                self.tclPath = self.createTcl(modified_content, self.newPath)
+
             else:
                 logging.error(f"----RTL Not Copied to {self.newPath}")
                 logging.error("----Exiting Execution")
