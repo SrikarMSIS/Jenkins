@@ -49,8 +49,8 @@ class Synthesis:
             logging.info(f"Technology : {self.technology}")
             logging.info(f"RTL File : {self.rtlFile}")
         except Exception as exception:
-            logging.error(f"Exception: {exception}")
-            logging.error(f"Exiting Execution")
+            logging.error(f"-Exception: {exception}")
+            logging.error(f"-Exiting Execution")
             sys.exit()
         return 0
 
@@ -81,8 +81,8 @@ class Synthesis:
                 logging.warning(f"Folder not created in: {self.newPath}")
 
         except Exception as exception:
-            logging.error(f"Exception: {exception}")
-            logging.error(f"Exiting Execution")
+            logging.error(f"--Exception: {exception}")
+            logging.error(f"--Exiting Execution")
 
         return 0
     
@@ -171,8 +171,8 @@ def main():
         else:
             logging.info("No Parameter Passed")
     except Exception as exception:
-        logging.error(f"Exception: {exception}")
-        logging.error(f"Exiting Execution")
+        logging.error(f"-----Exception: {exception}")
+        logging.error(f"------Exiting Execution")
         sys.exit()
     return 0
 
