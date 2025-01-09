@@ -75,7 +75,7 @@ class Synthesis:
             os.chdir(folder_path)
             logging.info(f"----The output path is : {folder_path}")
             self.newPath = folder_path
-            shutil.copy(self.rtlFile, folder_path)
+            shutil.copy(self.rtlFile, self.newPath)
 
         except Exception as exception:
             logging.error(f"Exception: {exception}")
