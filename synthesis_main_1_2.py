@@ -175,17 +175,15 @@ class Synthesis:
 
         """
         try:
+            #sudo -u vlsi csh -c "source /home/install/cshrc &&  \genus -file  /home/vlsi/srikar/jenkins_auto/output_files_and_gate_2025-01-09_15-24-17/synthesis.tcl"  
             logging.info("---------------")
             logging.info("--Entering the Cadence Shell")
             logging.info("---------------")
-            source_cmd = "source /home/installs/cshrc"
-            genus_cmd = "genus"
-            tcl_cmd = "source synthesis.tcl"
-            subProcess = subprocess.Popen(['/bin/csh', '-i'], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
-            subProcess.stdin.write(f"{source_cmd}\n".encode())
-            subProcess.stdin.write(f"{genus_cmd}\n".encode())
-            subProcess.stdin.write(f"{tcl_cmd}\n".encode())
-            subProcess.stdin.write("exit\n".encode())
+            source_cmd = 'sudo -u vlsi csh -c "source /home/installs/cshrc && genus -file synthesis.tcl"'
+            subProcess = subprocess.Popen(source_cmd ,shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE,text=True)
+            stdout, stderr = subProcess.communicate()
+            logging.info(f"Synthesis Output: {stdout}")
+            logging.error(f"Synthesis Error: {stderr}")
             logging.info("--Synthesis Done")
 
         except Exception as exception:
