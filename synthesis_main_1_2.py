@@ -75,7 +75,10 @@ class Synthesis:
             os.chdir(folder_path)
             logging.info(f"----The output path is : {folder_path}")
             self.newPath = folder_path
-            shutil.copy(self.rtlFile, self.newPath)
+	    if(os.path.exists(self.newPath)):
+	    shutil.copy(self.rtlFile, self.newPath)
+	    else:
+	    logging.warning(f"Folder not created in: {self.newPath}")
 
         except Exception as exception:
             logging.error(f"Exception: {exception}")
@@ -117,7 +120,7 @@ class Synthesis:
         """
 
         try: 
-            if(os.path.isfile(self.newPath)):
+            if(os.path.exists(self.newPath)):
                 with open(self.reqJson, 'r') as json_file:
                     json_data = json.load(json_file)
 
