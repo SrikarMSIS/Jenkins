@@ -7,6 +7,7 @@ import os
 import shutil
 from datetime import datetime
 import json
+import subprocess
 
 # Configure logging
 logging.basicConfig(
@@ -146,6 +147,50 @@ class Synthesis:
             logging.error(f"-----Exiting Execution")
             sys.exit()
         return 0
+    
+    def tclDir(self):
+        """
+        This function is used to change the directory to the TCL File Directory
+
+        Inputs: Self
+        Returns: None
+
+        """
+        try:
+            os.chdir(self.newPath)
+        
+        except Exception as exception:
+            logging.error(f"------Exception: {exception}")
+            logging.error("Stopping Execution")
+            sys.exit()
+        return 0
+    
+    def genusFlow(self):
+        """
+        This function is used to enter the cadence shell and enter the genus tool
+        On entering the genus tool the custom made TCL script will be sourced
+
+        Inputs: Self
+        Returns: None
+
+        """
+        try:
+            logging.info("---------------")
+            logging.info("--Entering the Cadence Shell")
+            logging.info("---------------")
+            source_cmd = "source /home/installs/cshrc"
+            genus_cmd = "genus"
+            tcl_cmd = "source synthesis.tcl"
+            subProcess = subprocess.Popen(['/bin/csh', '-i'], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+            subProcess.stdin.write(f"{source_cmd}\n".encode())
+            subProcess.stdin.write(f"{genus_cmd}\n".encode())
+            subProcess.stdin.write(f"{tcl_cmd}\n".encode())
+            subProcess.stdin.write("exit\n".encode())
+
+        except Exception as exception:
+            logging.error(f"!Execption: {exception}")
+            logging.error(f"Stopping Simulation")
+            sys.exit()
 
 
 
@@ -168,6 +213,12 @@ def main():
 
             #Write TCL Script from Template
             syn.writeTcl()
+
+            #Change Directory to New Directory
+            syn.tclDir()
+
+            #Enter the Cadence shell and perform genus operation
+            syn.genusFlow()
         else:
             logging.info("No Parameter Passed")
     except Exception as exception:
