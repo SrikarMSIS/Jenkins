@@ -74,6 +74,7 @@ class Synthesis:
             os.makedirs(folder_path)
             os.chdir(folder_path)
             logging.info(f"----The output path is : {folder_path}")
+            logging.info(f"{os.getcwd()}")
             self.newPath = folder_path
             if(os.path.exists(self.newPath)):
                 shutil.copy(self.rtlFile, self.newPath)
