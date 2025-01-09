@@ -180,7 +180,7 @@ class Synthesis:
             logging.info("--Entering the Cadence Shell")
             logging.info("---------------")
             source_cmd = 'sudo -u vlsi csh -c "source /home/installs/cshrc && genus -file synthesis.tcl"'
-            subProcess = subprocess.Popen(source_cmd ,shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE,text=True)
+            subProcess = subprocess.Popen(source_cmd ,shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE,universal_newlines=True)
             stdout, stderr = subProcess.communicate()
             logging.info(f"Synthesis Output: {stdout}")
             logging.error(f"Synthesis Error: {stderr}")
