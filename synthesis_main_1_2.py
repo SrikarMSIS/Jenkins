@@ -186,6 +186,7 @@ class Synthesis:
             subProcess.stdin.write(f"{genus_cmd}\n".encode())
             subProcess.stdin.write(f"{tcl_cmd}\n".encode())
             subProcess.stdin.write("exit\n".encode())
+            logging.info("--Synthesis Done")
 
         except Exception as exception:
             logging.error(f"!Execption: {exception}")
