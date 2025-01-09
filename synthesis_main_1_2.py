@@ -175,7 +175,6 @@ class Synthesis:
 
         """
         try:
-            #sudo -u vlsi csh -c "source /home/install/cshrc &&  \genus -file  /home/vlsi/srikar/jenkins_auto/output_files_and_gate_2025-01-09_15-24-17/synthesis.tcl"  
             logging.info("---------------")
             logging.info("--Entering the Cadence Shell")
             logging.info("---------------")
