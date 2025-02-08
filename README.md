@@ -1,14 +1,21 @@
 READ ME
 ------------------------
-The main file is used for the admin work. This file calls the subroutine job.
 
-The subroutine job is respnsible for cadence shell execution.
+This is a Jenkins Automation repository focusing on automating the process flow in VLSI Domain.
 
-The subroutine then retruns the control to the main file which then triggers the KPI job.
+Currently, the automation tasks are limited to the Physical Design of the Design.
 
-The KPI Job overlooks the output file and presents the user with a concised report.
+The Individual python scripts are the varioud jobs in the Jenkins environment.
+
+Use the following command to clone this repo:
+git clone "hhtps://github.com/SrikarMSIS/Jenkins.git"
+
+Please make sure that jenkins is already is installed on your system; prior to running these scripts.
+
+These scripts can be run individually by just passing the arguyments required for each job.
+
+Recommended Python Version : 3.10 and above
+
 
 ------------------------
 
-
-//this is test changes commit
