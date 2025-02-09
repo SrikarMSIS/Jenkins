@@ -61,7 +61,7 @@ class Synthesis:
         to the new self.newPath location
 
         Inputs: Self
-        Outputs: None
+        Returns: None
 
         """
         try:
