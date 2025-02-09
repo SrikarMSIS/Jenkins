@@ -195,7 +195,27 @@ class Synthesis:
             logging.error(f"Stopping Simulation")
             sys.exit()
 
+        return 0
+    
+    def generate_json_data(self):
+        data = {
+            "build_number" : os.environ.get("BUILD_NUMBER", "unknown"),
+            "path" : self.newPath,
+            "synthesis_path" : self.synthPath
+        }
 
+        return data
+    
+    @staticmethod
+    def save_json_data(data, filename = "synth_build_info.json"):
+        try:
+            with open(filename, "w") as file:
+                json.dump(data, file, indent = 4)
+        
+        except Exception as exception:
+            logging.error(f"Exception: {exception}")
+            logging.error("Stopping Simulation")
+            sys.exit()
 
 def main():
     try:
@@ -222,6 +242,11 @@ def main():
 
             #Enter the Cadence shell and perform genus operation
             syn.genusFlow()
+
+            #Writing Build Artifacts
+            data = syn.generate_json_data()
+            syn.save_json_data(data)
+            
         else:
             logging.info("No Parameter Passed")
     except Exception as exception:
