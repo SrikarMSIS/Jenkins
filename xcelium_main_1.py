@@ -149,7 +149,7 @@ class Xcelium:
 
 def main():
     try:
-        if len(sys.argv) == 2:
+        if len(sys.argv) > 1:
             # tech = sys.argv[1]
             # rtlFile = sys.argv[2]
             # effortSet = sys.argv[3]
