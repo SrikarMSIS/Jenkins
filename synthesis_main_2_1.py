@@ -214,6 +214,13 @@ class Synthesis:
                 json.dump(data, file, indent = 4)
 
             print(self.artifact_filepath)
+
+            if os.path.exists(self.artifact_filepath):
+                logging.info(f"JSON file successfully written to: {self.artifact_filepath}")
+                return self.artifact_filepath # Return the path only if the file exists
+            else:
+                logging.error(f"Error: JSON file not found after writing! Path: {self.artifact_filepath}")
+                sys.exit(1) # Exit with an error code if the file doesn't exist
             
             
         
