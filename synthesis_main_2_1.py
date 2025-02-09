@@ -31,6 +31,7 @@ class Synthesis:
         self.format = format
         self.newPath = None
         self.synthPath = None
+        self.artifactPath = None
         self.reqJson = "/home/vlsi/srikar/jenkins_auto/required.json"
         self.libraryPath = None
         self.svTemp = "/home/vlsi/srikar/jenkins_auto/synthesis_sv_temp.tcl"
@@ -206,16 +207,19 @@ class Synthesis:
 
         return data
     
-    @staticmethod
-    def save_json_data(data, filename = "synth_build_info.json"):
+    def save_json_data(self, data):
         try:
-            with open(filename, "w") as file:
+            self.artifact_filepath = os.path.join(self.synthPath, "synth_build_info.json")
+            with open(self.artifact_filepath, "w") as file:
                 json.dump(data, file, indent = 4)
+            
         
         except Exception as exception:
             logging.error(f"Exception: {exception}")
             logging.error("Stopping Simulation")
             sys.exit()
+
+        return 0
 
 def main():
     try:
