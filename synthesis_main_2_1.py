@@ -219,7 +219,7 @@ class Synthesis:
 
 def main():
     try:
-        if len(sys.argv) > 1:
+        if len(sys.argv) == 6:
             tech = sys.argv[1]
             rtlFile = sys.argv[2]
             effortSet = sys.argv[3]
