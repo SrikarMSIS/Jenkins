@@ -212,6 +212,9 @@ class Synthesis:
             self.artifact_filepath = os.path.join(self.synthPath, "synth_build_info.json")
             with open(self.artifact_filepath, "w") as file:
                 json.dump(data, file, indent = 4)
+
+            print(self.artifact_filepath)
+            
             
         
         except Exception as exception:
@@ -250,6 +253,8 @@ def main():
             #Writing Build Artifacts
             data = syn.generate_json_data()
             syn.save_json_data(data)
+            json_file_path = syn.artifact_filepath
+            print(f"JSON FIle Path = {json_file_path}")
             
         else:
             logging.info("No Parameter Passed")
