@@ -21,20 +21,9 @@ logging.basicConfig(
 )
 
 class Floorplan:
-    #Constructor
-    def __init__(self, tech, rtlFile, effortSet, constraints, format):
-        self.logPath = "/home/vlsi/srikar/jenkins_auto"
-        self.rtlFile = rtlFile
-        self.constraints = constraints
-        self.technology = tech
-        self.effort = effortSet
-        self.format = format
-        self.newPath = None
-        self.reqJson = "/home/vlsi/srikar/jenkins_auto/required.json"
-        self.libraryPath = None
-        self.svTemp = "/home/vlsi/srikar/jenkins_auto/synthesis_sv_temp.tcl"
-        self.vTemp = "/home/vlsi/srikar/jenkins_auto/synthesis_v_temp.tcl"
-        self.tclPath = None
+    def __init__(self, tech, synFiles):
+        self.tech = tech
+        self.synFiles = synFiles
     
     def adminJob(self):
         """
@@ -46,177 +35,56 @@ class Floorplan:
         """
         try:
             logging.info("----WELCOME TO JENKINS AUTOMATION")
-            logging.info("----RUNNING SYNTEHSIS")
+            logging.info("----RUNNING FLOORPLAN")
             logging.info(f"Technology : {self.technology}")
-            logging.info(f"RTL File : {self.rtlFile}")
+            logging.info(f"Working Files Path : {self.synFiles}")
         except Exception as exception:
             logging.error(f"-Exception: {exception}")
             logging.error(f"-Exiting Execution")
             sys.exit()
         return 0
-
-    def chngDir(self):
-        """
-        Change the Directory and Copy the RTL File from the previous location
-        to the new self.newPath location
-
-        Inputs: Self
-        Outputs: None
-
-        """
-        try:
-            logging.info("----Changing the working path")
-            current_time = datetime.now()
-            formatted_time = current_time.strftime('%Y-%m-%d_%H-%M-%S')
-            filename_with_extension = self.rtlFile.split('/')[-1]
-            filename_without_extension = filename_with_extension.split('.')[0]
-            folder_name = "output_files_" + filename_without_extension + "_" + formatted_time
-            folder_path = os.path.join(self.logPath,folder_name)
-            os.makedirs(folder_path)
-            os.chdir(folder_path)
-            logging.info(f"----The output path is : {folder_path}")
-            self.newPath = folder_path
-            if(os.path.exists(self.newPath)):
-                shutil.copy(self.rtlFile, self.newPath)
-            else:
-                logging.warning(f"Folder not created in: {self.newPath}")
-
-        except Exception as exception:
-            logging.error(f"--Exception: {exception}")
-            logging.error(f"--Exiting Execution")
-
-        return 0
-    
-    @staticmethod
-    def createTcl(content, path):
-        """
-        This function takes the TCL Content and then write it to the new path
-        Inputs: TCL Content, self.new_path
-        Returns: New TCL Script Path
-
-        """
-        try:
-            tclFileName = "synthesis.tcl"
-            tclPath = os.path.join(path, tclFileName)
-            with open(tclPath, 'w') as file:
-                file.write(content)
-            logging.info(f"TCL Script Written in the path: {tclPath}")
         
-        except Exception as exception:
-            logging.info(f"---Exception: {exception}")
-            logging.info("---Stopping Execution")
-            sys.exit()
-        
-        return tclPath
-            
-        
-    def writeTcl(self):
+    def create_change_pwd(self):
         """
-        This function takes the job inputs - Tech and RTL Format and writes a new file based on the inputs
-        This new synthesis tcl file is written to the working path
-
+        This function is to copy the netlist.v files with the sdc files to 
+        a new folder in the main directory called floorplan
+        And then, the path is updates
         Inputs: Self
         Returns: None
 
         """
 
-        try: 
-            if(os.path.exists(self.newPath)):
-                with open(self.reqJson, 'r') as json_file:
-                    json_data = json.load(json_file)
-
-                self.libraryPath = json_data[self.technology]["Synthesis"]["lib"]
-                if(self.format == 'v'):
-                    with open(self.vTemp, 'r') as file:
-                        tcl_content = file.read()
-                    filename_with_extension = self.rtlFile.split('/')[-1]
-                    modified_content = tcl_content.replace('{library_path}', self.libraryPath).replace('{rtl_file}', filename_with_extension).replace('{effort}', self.effort).replace('{sdc_path}', self.constraints)
-                else:
-                    with open(self.svTemp, 'r') as file:
-                        tcl_content = file.read()
-                    filename_with_extension = self.rtlFile.split('/')[-1]
-                    modified_content = tcl_content.replace('{library_path}', self.libraryPath).replace('{rtl_file}', filename_with_extension).replace('{effort}', self.effort).replace('{sdc_path}', self.constraints)
-                self.tclPath = self.createTcl(modified_content, self.newPath)
-
-            else:
-                logging.error(f"----RTL Not Copied to {self.newPath}")
-                logging.error("----Exiting Execution")
-                sys.exit()
-        except Exception as exception:
-            logging.error(f"----Exception: {exception}")
-            logging.error(f"-----Exiting Execution")
-            sys.exit()
-        return 0
-    
-    def tclDir(self):
-        """
-        This function is used to change the directory to the TCL File Directory
-
-        Inputs: Self
-        Returns: None
-
-        """
-        try:
-            os.chdir(self.newPath)
         
-        except Exception as exception:
-            logging.error(f"------Exception: {exception}")
-            logging.error("Stopping Execution")
-            sys.exit()
         return 0
-    
-    def genusFlow(self):
-        """
-        This function is used to enter the cadence shell and enter the genus tool
-        On entering the genus tool the custom made TCL script will be sourced
-
-        Inputs: Self
-        Returns: None
-
-        """
-        try:
-            logging.info("---------------")
-            logging.info("--Entering the Cadence Shell")
-            logging.info("---------------")
-            source_cmd = 'sudo -u vlsi csh -c "source /home/install/cshrc && genus -file synthesis.tcl"'
-            subProcess = subprocess.Popen(source_cmd ,shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE,universal_newlines=True)
-            stdout, stderr = subProcess.communicate()
-            logging.info(f"Synthesis Output: {stdout}")
-            logging.error(f"Synthesis Error: {stderr}")
-            logging.info("--Synthesis Done")
-
-        except Exception as exception:
-            logging.error(f"!Execption: {exception}")
-            logging.error(f"Stopping Simulation")
-            sys.exit()
-
-
 
 def main():
     try:
         if len(sys.argv) > 1:
             tech = sys.argv[1]
-            rtlFile = sys.argv[2]
+            synFiles = sys.argv[2]
             effortSet = sys.argv[3]
             constraints = sys.argv[4]
             format = sys.argv[5]
             #Create instance
-            syn = Floorplan(tech, rtlFile, effortSet, constraints, format)
+            flp = Floorplan(tech, synFiles)
 
             #Admin Job - For Logging
-            syn.adminJob()
+            flp.adminJob()
 
-            #Change Directory
-            syn.chngDir()
+            #Create Directory and change Working Path
+            flp.create_change_pwd()
 
-            #Write TCL Script from Template
-            syn.writeTcl()
+            # #Change Directory
+            # syn.chngDir()
 
-            #Change Directory to New Directory
-            syn.tclDir()
+            # #Write TCL Script from Template
+            # syn.writeTcl()
 
-            #Enter the Cadence shell and perform genus operation
-            syn.genusFlow()
+            # #Change Directory to New Directory
+            # syn.tclDir()
+
+            # #Enter the Cadence shell and perform genus operation
+            # syn.genusFlow()
         else:
             logging.info("No Parameter Passed")
     except Exception as exception:
