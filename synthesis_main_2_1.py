@@ -31,6 +31,7 @@ class Synthesis:
         self.format = format
         self.newPath = None
         self.synthPath = None
+        self.artifactPath = None
         self.reqJson = "/home/vlsi/srikar/jenkins_auto/required.json"
         self.libraryPath = None
         self.svTemp = "/home/vlsi/srikar/jenkins_auto/synthesis_sv_temp.tcl"
@@ -206,20 +207,33 @@ class Synthesis:
 
         return data
     
-    @staticmethod
-    def save_json_data(data, filename = "synth_build_info.json"):
+    def save_json_data(self, data):
         try:
-            with open(filename, "w") as file:
+            self.artifact_filepath = os.path.join(self.synthPath, "synth_build_info.json")
+            with open(self.artifact_filepath, "w") as file:
                 json.dump(data, file, indent = 4)
+
+            print(self.artifact_filepath)
+
+            if os.path.exists(self.artifact_filepath):
+                logging.info(f"JSON file successfully written to: {self.artifact_filepath}")
+                return self.artifact_filepath # Return the path only if the file exists
+            else:
+                logging.error(f"Error: JSON file not found after writing! Path: {self.artifact_filepath}")
+                sys.exit(1) # Exit with an error code if the file doesn't exist
+            
+            
         
         except Exception as exception:
             logging.error(f"Exception: {exception}")
             logging.error("Stopping Simulation")
             sys.exit()
 
+        return 0
+
 def main():
     try:
-        if len(sys.argv) > 1:
+        if len(sys.argv) == 6:
             tech = sys.argv[1]
             rtlFile = sys.argv[2]
             effortSet = sys.argv[3]
@@ -246,6 +260,8 @@ def main():
             #Writing Build Artifacts
             data = syn.generate_json_data()
             syn.save_json_data(data)
+            json_file_path = syn.artifact_filepath
+            print(f"JSON FIle Path = {json_file_path}")
             
         else:
             logging.info("No Parameter Passed")
