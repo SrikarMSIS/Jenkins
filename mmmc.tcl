@@ -1,3 +1,10 @@
+set libMinFiles "/home/install/FOUNDRY/digital/45nm/dig/lib/fast.lib"
+set libFiles "/home/install/FOUNDRY/digital/45nm/dig/lib/slow.lib"
+set qxTechFile "/home/install/FOUNDRY/digital/45nm/dig/qx/qrcTechFile"
+set capTableMin "/home/install/FOUNDRY/digital/45nm/LIBS/captbl/best/capTable"
+set capTableMax "/home/install/FOUNDRY/digital/45nm/LIBS/captbl/worst/capTable"
+set designConstraints "/home/vlsi/srikar/jenkins_auto/output_files_counter_2025-03-10_22-13-01/synthesis/block.sdc"
+
 create_library_set -name fast\
    -timing\
     [list $libMinFiles]
@@ -7,7 +14,6 @@ create_library_set -name slow\
 create_timing_condition -name tc_slow -library_sets slow 
 create_timing_condition -name tc_fast -library_sets fast
 create_rc_corner -name rc_best\
-   -cap_table $capTableMin\
    -pre_route_res 1.34236\
    -post_route_res 1.34236\
    -pre_route_cap 1.10066\
@@ -20,7 +26,6 @@ create_rc_corner -name rc_best\
    -qrc_tech $qxTechFile
 
 create_rc_corner -name rc_worst\
-   -cap_table $capTableMax\
    -pre_route_res 1.34236\
    -post_route_res 1.34236\
    -pre_route_cap 1.10066\
@@ -41,7 +46,7 @@ create_delay_corner -name fast_min\
    -rc_corner rc_best
 create_constraint_mode -name functional_func_slow_max\
    -sdc_files\
-    [list ../synthesis/outputs/${designName}_synth.sdc]
+    [list $designConstraints]
 create_analysis_view -name func_slow_max -constraint_mode functional_func_slow_max -delay_corner slow_max
 create_analysis_view -name func_fast_min -constraint_mode functional_func_slow_max -delay_corner fast_min
 set_analysis_view -setup [list func_slow_max] -hold [list func_fast_min]
