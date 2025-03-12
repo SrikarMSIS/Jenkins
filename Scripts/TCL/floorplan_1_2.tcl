@@ -15,12 +15,12 @@ set conf_qxlib_file {NULL}
 set defHierChar {/}
 set init_design_settop 0
 set init_gnd_net {VSS}
-set init_lef_file "/home/install/FOUNDRY/digital/45nm/dig/lef/gsclib045_tech.lef /home/install/FOUNDRY/digital/45nm/dig/lef/gsclib045_macro.lef"
-set designName "counter_8bit"
+set init_lef_file {lef}
+set designName {module}
 #Path to MMMC TCL file to be called
 set init_mmmc_file [file normalize /home/vlsi/srikar/jenkins_auto/Jenkins/Jenkins/mmmc.tcl]
 set init_pwr_net {VDD}
-set init_verilog [file normalize /home/vlsi/srikar/jenkins_auto/output_files_counter_2025-03-10_22-13-01/synthesis/netlist.v]
+set init_verilog [file normalize {netlist}]
 set init_design_setup ${designName}
 
 #Reading MMMC file

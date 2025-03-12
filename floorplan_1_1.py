@@ -28,6 +28,14 @@ class Floorplan:
         self.technology = tech
         self.flp_path = None
         self.reqJson = "/home/vlsi/srikar/jenkins_auto/required.json"
+        self.lib = None
+        self.libMin = None
+        self.lef = None
+        self.capMax = None
+        self.capMin = None
+        self.qrc = None
+        self.mmmcTcl = "/home/vlsi/srikar/jenkins_auto/Jenkins/Jenkins/Scripts/TCL/floorplan_1_2.tcl"
+        self.floorplanTcl = "/home/vlsi/srikar/jenkins_auto/Jenkins/Jenkins/Scripts/TCL/mmmc_1_2.tcl"
 
     
     def adminJob(self):
@@ -40,7 +48,7 @@ class Floorplan:
         """
         try:
             logging.info("----WELCOME TO JENKINS AUTOMATION")
-            logging.info("----RUNNING SYNTEHSIS")
+            logging.info("----RUNNING FLOORPLAN")
             logging.info(f"Technology : {self.technology}")
             logging.info(f"Synthesis File : {self.synFiles}")
         except Exception as exception:
@@ -54,7 +62,7 @@ class Floorplan:
         """
         This shall change to the directory created from the synthesis file
         Post this, creating a directory called Floorplan
-        Further processes, shall be done in the created folder
+        Copy the netlist.v and block.sdc file 
         
         Inputs: Self
         Returns: None
@@ -72,6 +80,20 @@ class Floorplan:
                 os.chdir(flp_folder_path)
                 self.flp_path = flp_folder_path
                 logging.info(f"--Working in {self.flp_path}")
+                #Copy the netlist.v and block.sdc files to the current path
+                synthName = "synthesis"
+                netlistSDC = os.path.join(self.synFiles, synthName)
+                if(os.path.exists(netlistSDC)):
+                    logging.info("---Synthesis Folder Exists")
+                    netlist = "netlist.v"
+                    constraints = "block.sdc"
+                    netlistPath = os.path.join(netlistSDC, netlist)
+                    constPath = os.path.join(netlistSDC, constraints)
+                    shutil.copy(netlistPath, self.flp_path)
+                    shutil.copy(constPath, self.flp_path)
+                else:
+                    logging.warning("Synthesis Folder not visible")
+                    sys.exit()
             else:
                 logging.error("--Floorplan Folder Not Created")
                 sys.exit()
@@ -81,6 +103,50 @@ class Floorplan:
             logging.error("Exiting Simulation")
             sys.exit()
         return 0
+    
+    @staticmethod
+    def createmmmcTcl(content, path):
+        """
+        This function takes the TCL Content and then write it to the new path
+        Inputs: TCL Content, self.synthPath
+        Returns: New TCL Script Path
+
+        """
+        try:
+            tclFileName = "mmmc.tcl"
+            tclPath = os.path.join(path, tclFileName)
+            with open(tclPath, 'w') as file:
+                file.write(content)
+            logging.info(f"TCL Script Written in the path: {tclPath}")
+        
+        except Exception as exception:
+            logging.info(f"---Exception: {exception}")
+            logging.info("---Stopping Execution")
+            sys.exit()
+        
+        return tclPath
+    
+    @staticmethod
+    def createflpTcl(content, path):
+        """
+        This function takes the TCL Content and then write it to the new path
+        Inputs: TCL Content, self.synthPath
+        Returns: New TCL Script Path
+
+        """
+        try:
+            tclFileName = "flp.tcl"
+            tclPath = os.path.join(path, tclFileName)
+            with open(tclPath, 'w') as file:
+                file.write(content)
+            logging.info(f"TCL Script Written in the path: {tclPath}")
+        
+        except Exception as exception:
+            logging.info(f"---Exception: {exception}")
+            logging.info("---Stopping Execution")
+            sys.exit()
+        
+        return tclPath
     
     def writeTcl(self):
         """
@@ -96,6 +162,25 @@ class Floorplan:
             if(os.path.exists(self.flp_path)):
                 with open(self.reqJson, 'r') as jsonFile:
                     jsonData = json.load(jsonFile)
+
+                self.lib = jsonData[self.technology]["Floorplan"]["lib"]
+                self.libMin = jsonData[self.technology]["Floorplan"]["libMin"]
+                self.capMax = jsonData[self.technology]["Floorplan"]["capTableMax"]
+                self.capMin = jsonData[self.technology]["Floorplan"]["capTableMin"]
+                self.qrc = jsonData[self.technology]["Floorplan"]["qrcTech"]
+                self.lef = jsonData[self.technology]["Floorplan"]["lef"]
+
+                #Open the template in read and write mode and write the modified content
+                with open(self.mmmcTcl, 'r') as file:
+                    mmmcContent = file.read()
+                modContents = mmmcContent.replace('{libMin}',self.libMin).replace('{lib}',self.lib).replace('{qrc}',self.qrc).replace('{capMin}',self.capMin).replace('{capMax}',self.capMax).replace('{sdc}',self.sdc)
+                self.mmmcPath = self.createmmmcTcl(modContents, self.flp_path)
+
+                with open(self.floorplanTcl, 'r') as file:
+                    flpContent = file.read()
+                modContents = flpContent.replace('{module}', self.module).replace('{lef}', self.lef).replace('{netlist}', self.netlist)
+                self.flpTclPath = self.createflpTcl(modContents, self.flp_path)
+
                 
         except Exception as exception:
             logging.error(f"---Exception Occured: {exception}")
@@ -109,10 +194,10 @@ def main():
     try:
         if len(sys.argv) > 1:
             tech = sys.argv[1]
-            synFiles = sys.argv[2]
+            synFolder = sys.argv[2]
     
             #Create instance
-            flp = Floorplan(tech, synFiles)
+            flp = Floorplan(tech, synFolder)
 
             # #Admin Job - For Logging
             flp.adminJob()
