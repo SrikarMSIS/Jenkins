@@ -187,7 +187,65 @@ class Floorplan:
             logging.error("Exiting Simulation")       
             sys.exit()
         return 0
+    
+    def flpFlow(self):
+        """
+        This function is used to enter the cadence shell and invoke the Innovus Stylus tool.
+        Once invoked, the tool will run on the TCL file created previously.
+        Inputs: Self
+        Returns: None
 
+        """
+        try:
+            logging.info("---------------")
+            logging.info("--Entering the Cadence Shell")
+            logging.info("---------------")
+            source_cmd = 'sudo -u vlsi csh -c source /home/install/cshrc && innovus -stylus -file flp.tcl'
+            subProcess = subprocess.Popen(source_cmd ,shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE,universal_newlines=True)
+            stdout, stderr = subProcess.communicate()
+            logging.info(f"Floorplan Output: {stdout}")
+            logging.error(f"Floorplan Error: {stderr}")
+            logging.info("--Floorplan Done")
+        
+        except Exception as exception:
+            logging.error(f"!Execption: {exception}")
+            logging.error(f"Stopping Simulation")
+            sys.exit()
+
+        return 0
+    
+    def generate_json_data(self):
+        data = {
+            "build_number" : os.environ.get("BUILD_NUMBER"),
+            "path" : self.flp_path,
+            "floorplan_path" : self.flp_path
+        }
+
+        return data
+    
+    def save_json_data(self, data):
+        try:
+            self.artifact_filepath = os.path.join(self.flp_path, "synth_builf_info.json")
+            with open(self.artifact_filepath, 'w') as file:
+                json.dump(data, file, indent=4)
+
+            print(self.artifact_filepath)
+
+            if os.path.exists(self.artifact_filepath):
+                logging.info(f"JSON file successfully written to: {self.artifact_filepath}")
+                return self.artifact_filepath # Return the path only if the file exists
+            else:
+                logging.error(f"Error: JSON file not found after writing! Path: {self.artifact_filepath}")
+                sys.exit(1) # Exit with an error code if the file doesn't exist
+            
+            
+        
+        except Exception as exception:
+            logging.error(f"Exception: {exception}")
+            logging.error("Stopping Simulation")
+            sys.exit()
+
+        return 0
 
 
 def main():
@@ -206,15 +264,21 @@ def main():
             flp.chngDir()
 
             # #Write TCL Script from Template
-            # syn.writeTcl()
+            flp.writeTcl()
 
             # #Change Directory to New Directory
             # syn.tclDir()
 
             # #Enter the Cadence shell and perform genus operation
-            # syn.genusFlow()
+            flp.genusFlow()
+
+            data = flp.generate_json_data()
+            flp.save_json_data(data)
+            json_file_path = flp.artifact_filepath
+            print(f"JSON FIle Path = {json_file_path}")
         else:
             logging.info("No Parameter Passed")
+            
     except Exception as exception:
         logging.error(f"-----Exception: {exception}")
         logging.error(f"------Exiting Execution")
