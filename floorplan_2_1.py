@@ -36,7 +36,7 @@ class Floorplan:
         self.capMin = None
         self.qrc = None
         self.mmmcTcl = "/home/vlsi/srikar/jenkins_auto/Jenkins/Jenkins/Scripts/TCL/mmmc_1_2.tcl"
-        self.floorplanTcl = "/home/vlsi/srikar/jenkins_auto/Jenkins/Jenkins/Scripts/TCL/floorplan_1_2.tcl"
+        self.floorplanTcl = "/home/vlsi/srikar/jenkins_auto/Jenkins/Jenkins/Scripts/TCL/floorplan_2_1.tcl"
         self.sdc= None
         self.mmmcPath = None
         self.moduleName = moduleName
@@ -208,7 +208,7 @@ class Floorplan:
             logging.info("---------------")
             logging.info("--Entering the Cadence Shell")
             logging.info("---------------")
-            source_cmd = 'sudo -u vlsi csh -c source /home/install/cshrc && innovus -stylus -file flp.tcl'
+            source_cmd = 'sudo -u vlsi csh -c "source /home/install/cshrc && innovus -stylus -file flp.tcl"'
             subProcess = subprocess.Popen(source_cmd ,shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE,universal_newlines=True)
             stdout, stderr = subProcess.communicate()
             logging.info(f"Floorplan Output: {stdout}")
