@@ -30,7 +30,8 @@ class Floorplan:
         self.reqJson = "/home/vlsi/srikar/jenkins_auto/required.json"
         self.lib = None
         self.libMin = None
-        self.lef = None
+        self.tech_lef = None
+        self.macro_lef = None
         self.capMax = None
         self.capMin = None
         self.qrc = None
@@ -174,7 +175,8 @@ class Floorplan:
                 self.capMax = jsonData[self.technology]["Floorplan"]["capTableMax"]
                 self.capMin = jsonData[self.technology]["Floorplan"]["capTableMin"]
                 self.qrc = jsonData[self.technology]["Floorplan"]["qrcTech"]
-                self.lef = jsonData[self.technology]["Floorplan"]["lef"]
+                self.tech_lef = jsonData[self.technology]["Floorplan"]["tech_lef"]
+                self.macro_lef = jsonData[self.technology]["Floorplan"]["macro_lef"]
 
                 #Open the template in read and write mode and write the modified content
                 with open(self.mmmcTcl, 'r') as file:
@@ -184,7 +186,7 @@ class Floorplan:
 
                 with open(self.floorplanTcl, 'r') as file:
                     flpContent = file.read()
-                modContents = flpContent.replace('{module}', self.moduleName).replace('{lef}', self.lef).replace('{netlist}', self.netlist).replace('{mmmc_path}', self.mmmcPath)
+                modContents = flpContent.replace('{module}', self.moduleName).replace('{tech_lef}', self.tech_lef).replace('{macro_lef}',self.macro_lef).replace('{netlist}', self.netlist).replace('{mmmc_path}', self.mmmcPath)
                 self.flpTclPath = self.createflpTcl(modContents, self.flp_path)
 
                 

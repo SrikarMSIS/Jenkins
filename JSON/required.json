@@ -1,0 +1,43 @@
+{
+	"180nm":{
+		"Synthesis":{
+			"lib":"/home/install/FOUNDRY/digital/180nm/dig/lib/slow.lib"
+		},
+		"Floorplan":{
+			"lib":"/home/install/FOUNDRY/digital/180nm/dig/lib/slow.lib",
+			"libMin":"/home/install/FOUNDRY/digital/180nm/dig/lib/fast.lib",
+			"lef":"/home/install/FOUNDRY/digital/180nm/dig/lef/all.lef",
+			"capTable":"/home/install/FOUNDRY/digital/180nm/dig/captable/t018s6mlv.capTbl",
+			"qxTech": "/home/install/FOUNDRY/digital/180nm/dig/qrc/t018s6mm.tch"
+		}
+	},
+	"90nm":{
+		"Synthesis":{
+			"lib":"/home/install/FOUNDRY/digital/90nm/dig/lib/slow.lib"
+		},
+		"Floorplan":{
+			"lib":"/home/install/FOUNDRY/digital/90nm/dig/lib/slow.lib",
+			"libMin":"/home/install/FOUNDRY/digital/90nm/dig/lib/fast.lib",
+			"lef":"/home/install/FOUNDRY/digital/90nm/dig/lef/gsclib090_tech.lef /home/install/FOUNDRY/digital/90nm/dig/lef/gsclib090_macro.lef",
+			"qxTech": "/home/install/FOUNDRY/digital/90nm/dig/qrc/gpdk090_9l.tch",
+			"capTable":""
+		}
+	},
+	"45nm":{
+		"Synthesis":{
+			"lib":"/home/install/FOUNDRY/digital/45nm/dig/lib/slow.lib"
+		},
+		"Floorplan":{
+			"lib":"/home/install/FOUNDRY/digital/45nm/dig/lib/slow.lib",
+			"libMin":"/home/install/FOUNDRY/digital/45nm/dig/lib/fast.lib",
+			"tech_lef":"/home/install/FOUNDRY/digital/45nm/dig/lef/gsclib045_tech.lef",
+			"macro_lef": "/home/install/FOUNDRY/digital/45nm/dig/lef/gsclib045_macro.lef",
+			"capTableMin":"/home/install/FOUNDRY/digital/45nm/LIBS/captbl/best/capTable",
+			"capTableMax":"/home/install/FOUNDRY/digital/45nm/LIBS/captbl/worst/capTable",
+			"qxConf":"/home/install/FOUNDRY/digital/45nm/dig/qx/qrc.conf",
+			"qxTech":"/home/install/FOUNDRY/digital/45nm/dig/qx/qrc.conf",
+			"qxMap":"/home/install/FOUNDRY/digital/45nm/dig/qx/mapFile",
+			"qrcTech": "/home/install/FOUNDRY/digital/45nm/dig/qx/qrcTechFile"
+		} 
+	}
+}
