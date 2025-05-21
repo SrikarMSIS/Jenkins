@@ -198,7 +198,7 @@ def main():
             plc.writeTcl()
 
             # #Enter the Cadence shell and perform genus operation
-            plc.flpFlow()
+            plc.placeFlow()
 
             data = plc.generate_json_data()
             plc.save_json_data(data)
