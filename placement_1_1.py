@@ -22,11 +22,12 @@ logging.basicConfig(
 
 class Placement:
     #Constructor
-    def __init__(self, tech, pnrPath, buildNum):
+    def __init__(self, tech, pnrPath, module, buildNum):
         self.tech = tech
         self.buildNum = buildNum
         self.pnrPath = pnrPath
-        self.placementTCL = "/home/vlsi/srikar/jenkins_auto/Jenkins/Jenkins/Scripts/TCL/placement_2_1.tcl"
+        self.moduleName = module
+        self.placementTCL = "/home/vlsi/srikar/jenkins_auto/Jenkins/Jenkins/Scripts/TCL/PCR_1_1.tcl"
         self.placeTCL = None
 
     
@@ -114,7 +115,7 @@ class Placement:
                     self.tech = "45"
                 else:
                     self.tech = self.tech
-                modContents = placeContent.replace('{tech}',self.tech)
+                modContents = placeContent.replace('{tech}',self.tech).replace('{module}',self.moduleName)
                 self.placeTCL = self.createPlacementTcl(modContents, self.pnrPath)
 
                 
@@ -189,10 +190,11 @@ def main():
         if len(sys.argv) > 1:
             tech = sys.argv[1]
             pnrFolder = sys.argv[2]
-            buildNum = sys.argv[3]
+            module = sys.argv[3]
+            buildNum = sys.argv[4]
     
             #Create instance
-            plc = Placement(tech, pnrFolder, buildNum)
+            plc = Placement(tech, pnrFolder, module, buildNum)
 
             # #Admin Job - For Logging
             plc.adminJob()

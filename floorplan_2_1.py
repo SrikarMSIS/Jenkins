@@ -228,7 +228,8 @@ class Floorplan:
             "build_number" : self.buildNum,
             "path" : self.flp_path,
             "floorplan_path" : self.flp_path,
-            "tech" : self.technology
+            "tech" : self.technology,
+            "module": self.moduleName
         }
 
         return data
