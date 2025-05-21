@@ -73,7 +73,7 @@ class Synthesis:
             formatted_time = current_time.strftime('%Y-%m-%d_%H-%M-%S')
             filename_with_extension = self.rtlFile.split('/')[-1]
             filename_without_extension = filename_with_extension.split('.')[0]
-            folder_name = "output_files_" + filename_without_extension + "_" + formatted_time
+            folder_name = "output_files_" + filename_without_extension + "_" + self.buildNum
             folder_path = os.path.join(self.logPath,folder_name)
             os.makedirs(folder_path)
             os.chdir(folder_path)
