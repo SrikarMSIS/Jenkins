@@ -231,7 +231,7 @@ class Floorplan:
     
     def save_json_data(self, data):
         try:
-            self.artifact_filepath = os.path.join(self.flp_path, "synth_builf_info.json")
+            self.artifact_filepath = os.path.join(self.flp_path, "synth_build_info.json")
             with open(self.artifact_filepath, 'w') as file:
                 json.dump(data, file, indent=4)
 
