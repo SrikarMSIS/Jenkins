@@ -182,7 +182,7 @@ class Placement:
 
 def main():
     try:
-        if len(sys.argv) == 3:
+        if len(sys.argv) > 3:
             tech = sys.argv[1]
             pnrFolder = sys.argv[2]
             buildNum = sys.argv[3]
