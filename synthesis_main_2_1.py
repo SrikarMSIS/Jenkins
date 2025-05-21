@@ -22,7 +22,7 @@ logging.basicConfig(
 
 class Synthesis:
     #Constructor
-    def __init__(self, tech, rtlFile, effortSet, constraints, format):
+    def __init__(self, tech, rtlFile, effortSet, constraints, format, buildNum):
         self.logPath = "/home/vlsi/srikar/jenkins_auto"
         self.rtlFile = rtlFile
         self.constraints = constraints
@@ -37,6 +37,7 @@ class Synthesis:
         self.svTemp = "/home/vlsi/srikar/jenkins_auto/synthesis_sv_temp.tcl"
         self.vTemp = "/home/vlsi/srikar/jenkins_auto/synthesis_v_temp.tcl"
         self.tclPath = None
+        self.buildNum = buildNum
     
     def adminJob(self):
         """
@@ -200,9 +201,10 @@ class Synthesis:
     
     def generate_json_data(self):
         data = {
-            "build_number" : os.environ.get("BUILD_NUMBER", "unknown"),
+            "build_number" : self.buildNum,
             "path" : self.newPath,
-            "synthesis_path" : self.synthPath
+            "synthesis_path" : self.synthPath,
+            "tech" : self.technology
         }
 
         return data
@@ -233,14 +235,15 @@ class Synthesis:
 
 def main():
     try:
-        if len(sys.argv) == 6:
+        if len(sys.argv) == 7:
             tech = sys.argv[1]
             rtlFile = sys.argv[2]
             effortSet = sys.argv[3]
             constraints = sys.argv[4]
             format = sys.argv[5]
+            buildNum = sys.argv[6]
             #Create instance
-            syn = Synthesis(tech, rtlFile, effortSet, constraints, format)
+            syn = Synthesis(tech, rtlFile, effortSet, constraints, format, buildNum)
 
             #Admin Job - For Logging
             syn.adminJob()

@@ -22,8 +22,9 @@ logging.basicConfig(
 
 class Floorplan:
     #Constructor
-    def __init__(self, tech, synFiles, moduleName):
+    def __init__(self, tech, synFiles, moduleName, buildNum):
         self.logPath = "/home/vlsi/srikar/jenkins_auto"
+        self.buildNum = buildNum
         self.synFiles = synFiles
         self.technology = tech
         self.flp_path = None
@@ -224,9 +225,10 @@ class Floorplan:
     
     def generate_json_data(self):
         data = {
-            "build_number" : os.environ.get("BUILD_NUMBER"),
+            "build_number" : self.buildNum,
             "path" : self.flp_path,
-            "floorplan_path" : self.flp_path
+            "floorplan_path" : self.flp_path,
+            "tech" : self.technology
         }
 
         return data
@@ -262,9 +264,10 @@ def main():
             tech = sys.argv[1]
             synFolder = sys.argv[2]
             moduleName = sys.argv[3]
+            buildNum = sys.argv[4]
     
             #Create instance
-            flp = Floorplan(tech, synFolder, moduleName)
+            flp = Floorplan(tech, synFolder, moduleName, buildNum)
 
             # #Admin Job - For Logging
             flp.adminJob()
