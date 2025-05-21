@@ -256,13 +256,13 @@ class Floorplan:
 
 def main():
     try:
-        if len(sys.argv) > 1:
+        if len(sys.argv) == 3:
             tech = sys.argv[1]
             synFolder = sys.argv[2]
             moduleName = sys.argv[3]
     
             #Create instance
-            flp = Floorplan(tech, synFolder)
+            flp = Floorplan(tech, synFolder, moduleName)
 
             # #Admin Job - For Logging
             flp.adminJob()
