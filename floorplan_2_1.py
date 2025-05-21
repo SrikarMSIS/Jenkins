@@ -27,7 +27,7 @@ class Floorplan:
         self.synFiles = synFiles
         self.technology = tech
         self.flp_path = None
-        self.reqJson = "/home/vlsi/srikar/jenkins_auto/required.json"
+        self.reqJson = "/home/vlsi/srikar/jenkins_auto/Jenkins/Jenkins/Scripts/JSON/required.json"
         self.lib = None
         self.libMin = None
         self.tech_lef = None
