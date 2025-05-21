@@ -39,5 +39,22 @@
 			"qxMap":"/home/install/FOUNDRY/digital/45nm/dig/qx/mapFile",
 			"qrcTech": "/home/install/FOUNDRY/digital/45nm/dig/qx/qrcTechFile"
 		} 
+	},
+	"cad45":{
+		"Synthesis":{
+			"lib":"/home/vlsi/cad45/lib/slow_vdd1v0_basicCells.lib"
+		},
+		"Floorplan":{
+			"lib":"/home/vlsi/cad45/lib/slow_vdd1v0_basicCells.lib",
+			"libMin":"/home/vlsi/cad45/lib/fast_vdd1v0_basicCells.lib",
+			"tech_lef":"/home/vlsi/cad45/lef/gsclib045_tech.lef",
+			"macro_lef": "/home/vlsi/cad45/lef/gsclib045_macro.lef",
+			"capTableMin":"/home/vlsi/cad45/captable/cln28hpl_1p10m+alrdl_5x2yu2yz_typical.capTbl",
+			"capTableMax":"/home/vlsi/cad45/captable/cln28hpl_1p10m+alrdl_5x2yu2yz_typical.capTbl",
+			"qxConf":"/home/install/FOUNDRY/digital/45nm/dig/qx/qrc.conf",
+			"qxTech":"/home/install/FOUNDRY/digital/45nm/dig/qx/qrc.conf",
+			"qxMap":"/home/install/FOUNDRY/digital/45nm/dig/qx/mapFile",
+			"qrcTech": "/home/install/FOUNDRY/digital/45nm/dig/qx/qrcTechFile"
+		} 
 	}
 }
