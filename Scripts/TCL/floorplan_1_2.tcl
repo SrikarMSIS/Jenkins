@@ -18,7 +18,7 @@ set init_gnd_net {VSS}
 set init_lef_file {lef}
 set designName {module}
 #Path to MMMC TCL file to be called
-set init_mmmc_file [file normalize /home/vlsi/srikar/jenkins_auto/Jenkins/Jenkins/mmmc.tcl]
+set init_mmmc_file [file normalize {mmmc_path}]
 set init_pwr_net {VDD}
 set init_verilog [file normalize {netlist}]
 set init_design_setup ${designName}

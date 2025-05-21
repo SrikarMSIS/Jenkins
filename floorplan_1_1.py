@@ -22,7 +22,7 @@ logging.basicConfig(
 
 class Floorplan:
     #Constructor
-    def __init__(self, tech, synFiles):
+    def __init__(self, tech, synFiles, moduleName):
         self.logPath = "/home/vlsi/srikar/jenkins_auto"
         self.synFiles = synFiles
         self.technology = tech
@@ -34,8 +34,12 @@ class Floorplan:
         self.capMax = None
         self.capMin = None
         self.qrc = None
-        self.mmmcTcl = "/home/vlsi/srikar/jenkins_auto/Jenkins/Jenkins/Scripts/TCL/floorplan_1_2.tcl"
-        self.floorplanTcl = "/home/vlsi/srikar/jenkins_auto/Jenkins/Jenkins/Scripts/TCL/mmmc_1_2.tcl"
+        self.mmmcTcl = "/home/vlsi/srikar/jenkins_auto/Jenkins/Jenkins/Scripts/TCL/mmmc_1_2.tcl"
+        self.floorplanTcl = "/home/vlsi/srikar/jenkins_auto/Jenkins/Jenkins/Scripts/TCL/floorplan_1_2.tcl"
+        self.sdc= None
+        self.mmmcPath = None
+        self.moduleName = moduleName
+        self.netlist =None
 
     
     def adminJob(self):
@@ -72,11 +76,11 @@ class Floorplan:
             logging.info("----Changing the Working Path")
             logging.info(f"Changing to: {self.synFiles}")
             os.chdir(self.synFiles)
-            flp_folder_name = "floorplan"
+            flp_folder_name = "pnr"
             flp_folder_path = os.path.join(self.synFiles,flp_folder_name)
             os.makedirs(flp_folder_path)
             if(os.path.exists(flp_folder_path)):
-                logging.info("---Floorplan Folder created")
+                logging.info("---PNR Folder created")
                 os.chdir(flp_folder_path)
                 self.flp_path = flp_folder_path
                 logging.info(f"--Working in {self.flp_path}")
@@ -91,11 +95,13 @@ class Floorplan:
                     constPath = os.path.join(netlistSDC, constraints)
                     shutil.copy(netlistPath, self.flp_path)
                     shutil.copy(constPath, self.flp_path)
+                    self.sdc = os.path.join(self.flp_path, constraints)
+                    self.netlist = os.path.join(self.flp_path, netlist)
                 else:
                     logging.warning("Synthesis Folder not visible")
                     sys.exit()
             else:
-                logging.error("--Floorplan Folder Not Created")
+                logging.error("--PNR Folder Not Created")
                 sys.exit()
 
         except Exception as exception:
@@ -108,7 +114,7 @@ class Floorplan:
     def createmmmcTcl(content, path):
         """
         This function takes the TCL Content and then write it to the new path
-        Inputs: TCL Content, self.synthPath
+        Inputs: TCL Content, self.flpPath
         Returns: New TCL Script Path
 
         """
@@ -178,7 +184,7 @@ class Floorplan:
 
                 with open(self.floorplanTcl, 'r') as file:
                     flpContent = file.read()
-                modContents = flpContent.replace('{module}', self.module).replace('{lef}', self.lef).replace('{netlist}', self.netlist)
+                modContents = flpContent.replace('{module}', self.moduleName).replace('{lef}', self.lef).replace('{netlist}', self.netlist).replace('{mmmc_path}', self.mmmcPath)
                 self.flpTclPath = self.createflpTcl(modContents, self.flp_path)
 
                 
@@ -253,6 +259,7 @@ def main():
         if len(sys.argv) > 1:
             tech = sys.argv[1]
             synFolder = sys.argv[2]
+            moduleName = sys.argv[3]
     
             #Create instance
             flp = Floorplan(tech, synFolder)
@@ -266,11 +273,8 @@ def main():
             # #Write TCL Script from Template
             flp.writeTcl()
 
-            # #Change Directory to New Directory
-            # syn.tclDir()
-
             # #Enter the Cadence shell and perform genus operation
-            flp.genusFlow()
+            flp.flpFlow()
 
             data = flp.generate_json_data()
             flp.save_json_data(data)
