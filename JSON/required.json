@@ -1,5 +1,5 @@
 {
-	"180nm":{
+	"180":{
 		"Synthesis":{
 			"lib":"/home/install/FOUNDRY/digital/180nm/dig/lib/slow.lib"
 		},
@@ -11,7 +11,7 @@
 			"qxTech": "/home/install/FOUNDRY/digital/180nm/dig/qrc/t018s6mm.tch"
 		}
 	},
-	"90nm":{
+	"90":{
 		"Synthesis":{
 			"lib":"/home/install/FOUNDRY/digital/90nm/dig/lib/slow.lib"
 		},
@@ -23,7 +23,7 @@
 			"capTable":""
 		}
 	},
-	"45nm":{
+	"45":{
 		"Synthesis":{
 			"lib":"/home/install/FOUNDRY/digital/45nm/dig/lib/slow.lib"
 		},
