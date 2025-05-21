@@ -12,4 +12,4 @@ place_opt_design -place_global_place_io_pins TRUE
 
 write_db placeCompleted.inn
 
-gui_show
+exit
