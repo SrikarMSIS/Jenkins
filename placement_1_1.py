@@ -110,6 +110,10 @@ class Placement:
                 #Open the template in read and write mode and write the modified content
                 with open(self.placementTCL, 'r') as file:
                     placeContent = file.read()
+                if(self.tech == "cad45" or self.tech == "45"):
+                    self.tech = "45"
+                else:
+                    self.tech = self.tech
                 modContents = placeContent.replace('{tech}',self.tech)
                 self.placeTCL = self.createPlacementTcl(modContents, self.pnrPath)
 
