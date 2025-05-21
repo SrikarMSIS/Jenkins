@@ -32,7 +32,7 @@ class Synthesis:
         self.newPath = None
         self.synthPath = None
         self.artifactPath = None
-        self.reqJson = "/home/vlsi/srikar/jenkins_auto/required.json"
+        self.reqJson = "/home/vlsi/srikar/jenkins_auto/Jenkins/Jenkins/JSON/required.json"
         self.libraryPath = None
         self.svTemp = "/home/vlsi/srikar/jenkins_auto/synthesis_sv_temp.tcl"
         self.vTemp = "/home/vlsi/srikar/jenkins_auto/synthesis_v_temp.tcl"
