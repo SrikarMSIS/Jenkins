@@ -22,8 +22,9 @@ logging.basicConfig(
 
 class Placement:
     #Constructor
-    def __init__(self, tech, pnrPath):
+    def __init__(self, tech, pnrPath, buildNum):
         self.tech = tech
+        self.buildNum = buildNum
         self.pnrPath = pnrPath
         self.placementTCL = "/home/vlsi/srikar/jenkins_auto/Jenkins/Jenkins/Scripts/TCL/placement_2_1.tcl"
         self.placeTCL = None
@@ -147,7 +148,7 @@ class Placement:
     
     def generate_json_data(self):
         data = {
-            "build_number" : os.environ.get("BUILD_NUMBER"),
+            "build_number" : self.buildNum,
             "path" : self.pnrPath,
             "placement_path" : self.pnrPath
         }
@@ -156,7 +157,7 @@ class Placement:
     
     def save_json_data(self, data):
         try:
-            self.artifact_filepath = os.path.join(self.pnrPath, "synth_build_info.json")
+            self.artifact_filepath = os.path.join(self.pnrPath, "place_build_info.json")
             with open(self.artifact_filepath, 'w') as file:
                 json.dump(data, file, indent=4)
 
@@ -184,9 +185,10 @@ def main():
         if len(sys.argv) > 1:
             tech = sys.argv[1]
             pnrFolder = sys.argv[2]
+            buildNum = sys.argv[3]
     
             #Create instance
-            plc = Placement(tech, pnrFolder)
+            plc = Placement(tech, pnrFolder, buildNum)
 
             # #Admin Job - For Logging
             plc.adminJob()
