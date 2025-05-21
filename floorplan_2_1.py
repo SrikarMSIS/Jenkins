@@ -256,7 +256,7 @@ class Floorplan:
 
 def main():
     try:
-        if len(sys.argv) == 3:
+        if len(sys.argv) > 1:
             tech = sys.argv[1]
             synFolder = sys.argv[2]
             moduleName = sys.argv[3]
